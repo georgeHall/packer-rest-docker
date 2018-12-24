@@ -1,0 +1,11 @@
+---
+- name: A demo to run ansible in a docker container
+  hosts: all
+  tasks:
+  - name: Add a file to root's home dir
+    copy:
+      src: ./build/libs/{{ jar_name }}
+      dest: /root
+      owner: root
+      group: root
+      mode: a+x

@@ -1,0 +1,53 @@
+{
+  "variables": {
+    "ansible_host": "default",
+    "ansible_connection": "docker",
+    "jar_name": "test-jar-0.0.1-SNAPSHOT.jar"
+  },
+  "builders": [
+    {
+      "type": "docker",
+      "image": "gerh/base-openjdk-python:0.1-alpine",
+      "commit": "true",
+      "changes": [
+        "EXPOSE 8080",
+        "CMD [\"/opt/openjdk-12/bin/java\", \"-jar\", \"/root/{{user `jar_name`}}\"]"
+      ],
+      "run_command": [
+        "-d",
+        "-i",
+        "-t",
+        "--name",
+        "{{user `ansible_host`}}",
+        "{{.Image}}",
+        "/bin/ash"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "apk add python"
+      ]
+    },
+    {
+      "type": "ansible",
+      "user": "root",
+      "playbook_file": "./playbook.yml",
+      "extra_arguments": [
+        "--extra-vars",
+        "ansible_host={{user `ansible_host`}} ansible_connection={{user `ansible_connection`}} jar_name={{user `jar_name`}}"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "gerh/test",
+        "tag": "0.1"
+      }
+    ]
+  ]
+}

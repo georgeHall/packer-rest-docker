@@ -1,0 +1,39 @@
+{
+    "variables": {
+      "ansible_host": "default",
+      "ansible_connection": "docker"
+    },
+    "builders": [
+      {
+        "type": "docker",
+        "image": "openjdk:12-alpine",
+        "commit": "true",
+        "run_command": [
+          "-d",
+          "-i",
+          "-t",
+          "--name",
+          "{{user `ansible_host`}}",
+          "{{.Image}}",
+          "/bin/ash"
+        ]
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "inline": [
+          "apk add python"
+        ]
+      }
+    ],
+    "post-processors": [
+      [
+        {
+          "type": "docker-tag",
+          "repository": "gerh/base-openjdk-python",
+          "tag": "0.1-alpine"
+        }
+      ]
+    ]
+  }
