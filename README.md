@@ -8,8 +8,10 @@ The user can then run the image
 
 Run commands.
 
+```bash
 ./gradlew build
 packer build ./base-packer.json
 packer build ./packer.json
 docker run -d -p 8080:8080 gerh/test:0.1
 curl localhost:8080
+```
