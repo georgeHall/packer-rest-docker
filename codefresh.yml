@@ -7,6 +7,15 @@ stages:
   - "list"
 
 steps:
+  Clone:
+    title: Running docker image
+    type: git-clone
+    arguments:
+      repo: 'georgeHall/packer-rest-docker'
+      git: github
+      revision: 'develop'
+
+
   list:
     title: "LIST"
     type: freestyle
