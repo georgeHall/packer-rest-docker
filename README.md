@@ -15,3 +15,5 @@ packer build ./packer.json
 docker run -d -p 8080:8080 gerh/test:0.1
 curl localhost:8080
 ```
+
+TRIGGER
