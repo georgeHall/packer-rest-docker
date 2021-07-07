@@ -19,7 +19,6 @@ steps:
   list:
     title: "LIST"
     type: freestyle
-    working_directory: '${{CLONE_STEP_NAME}}'
     image: 'quay.io/codefreshplugins/alpine:3.8'
     # Clone the master branch. Or, use ${{CF_BRANCH}} to get branch name from trigger
     # Learn more at https://codefresh.io/docs/docs/codefresh-yaml/variables/
